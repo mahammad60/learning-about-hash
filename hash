@@ -1,0 +1,49 @@
+from replit import db
+import random
+def add_user():
+
+        username = input("username > ")
+        password = input("password > ")
+        salt = random.randint(1000,9999)
+        newpassword = f"{password}{salt}"
+        newpassword = hash(password)
+        db[username] = {"password":password, "salt": salt,"username":username}
+        print("user added")
+   
+        
+    
+
+def login():
+          username = input ("username: ")
+          if username in db:
+           stored_username = db[username]["username"]
+           stored_salt = db[username]["salt"]
+           stored_password = db[username]["password"]
+           password = input ("password: ")
+          else:
+                print("wrong username")
+          if username in db:
+             if password == stored_password:
+                print("username:",stored_username)
+                print("password",stored_password)
+                print("welcome")
+             else:
+                  print("wrong password, try again")
+                  
+     
+def main():
+ while True:
+  add_login = int(input ("1: add user 2: login  or type 3: to exit > "))
+  if add_login == 1:
+     add_user()
+
+
+  elif add_login == 2:
+   
+     login()
+  elif add_login == 3:
+     print("exiting")
+     break
+  else: 
+     print("add a number or exit")
+main()
